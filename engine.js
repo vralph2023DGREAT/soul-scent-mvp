@@ -1,8 +1,10 @@
 // engine.js — scoring skeleton (canonical)
+// NOTE: dims is defined in config.js; do not redeclare it here.
+
 // ensure every vector has all dims
 function ensureVector(v){
   const out = {};
-  dims.forEach(d => out[d] = v[d] || 0);
+  dims.forEach(d => out[d] = v && v[d] ? v[d] : 0);
   return out;
 }
 
@@ -44,25 +46,49 @@ function cosineSimilarity(vecA, vecB){
   return dot / (Math.sqrt(magA) * Math.sqrt(magB));
 }
 
+// optional helper to normalize vectors for cosine comparisons
+function normalizeForCosine(vec){
+  const out = {};
+  let sumSq = 0;
+  dims.forEach(d => { sumSq += (vec[d]||0)*(vec[d]||0); });
+  const mag = Math.sqrt(sumSq) || 1;
+  dims.forEach(d => out[d] = (vec[d]||0) / mag);
+  return out;
+}
+
 function matchSoulScent(finalDNA){
-  let best=null, second=null;
+  if (!soulScents || Object.keys(soulScents).length === 0) {
+    return { soulScent: null, similarityScores: {}, confidence: 0, top: null, runnerUp: null };
+  }
+
+  const normFinal = normalizeForCosine(finalDNA);
+  let best = null;
+  let second = null;
   const scores = {};
+
   Object.keys(soulScents).forEach(name => {
     const scentVec = ensureVector(soulScents[name]);
-    const sim = cosineSimilarity(finalDNA, scentVec);
+    const normScent = normalizeForCosine(scentVec);
+    const sim = cosineSimilarity(normFinal, normScent);
     scores[name] = sim;
-    if(best === null || sim > scores[best]) {
+
+    if (best === null || sim > scores[best]) {
       second = best;
       best = name;
-    } else if(second === null || sim > scores[second]) {
+    } else if (second === null || sim > scores[second]) {
       second = name;
     }
   });
-  const confidence = best && second ? Math.max(0, scores[best] - scores[second]) : 0;
+
+  const confidence = (best && second) ? Math.max(0, scores[best] - scores[second]) : 0;
   return { soulScent: best, similarityScores: scores, confidence, top: best, runnerUp: second };
 }
 
-// Example helper: element from birthdate (simple)
+// Example helper: element from zodiac sign
 function elementFromZodiac(sign){
   return zodiacElements[sign] || null;
 }
+
+// Debug logs to confirm load order and values
+console.log('engine loaded, scoringWeights:', scoringWeights);
+console.log('engine loaded, archetypes count:', Object.keys(archetypes || {}).length);
