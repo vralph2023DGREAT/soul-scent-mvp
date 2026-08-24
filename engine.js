@@ -1,6 +1,4 @@
 // engine.js — scoring skeleton (canonical)
-const dims = ["FRESH","FLORAL","AMBER","WOODY","EARTHY","MINERAL","RESINOUS","AROMATIC","DARK_FRESH","MUSK"];
-
 // ensure every vector has all dims
 function ensureVector(v){
   const out = {};
