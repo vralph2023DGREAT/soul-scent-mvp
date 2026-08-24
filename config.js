@@ -1,0 +1,48 @@
+// config.js — canonical config (editable)
+const dims = ["FRESH","FLORAL","AMBER","WOODY","EARTHY","MINERAL","RESINOUS","AROMATIC","DARK_FRESH","MUSK"];
+
+const scoringWeights = {
+  element: 0.15,
+  archetype: 0.35,
+  state: 0.30,
+  environment: 0.20
+};
+
+const zodiacElements = {
+  Aries:"FIRE", Leo:"FIRE", Sagittarius:"FIRE",
+  Taurus:"EARTH", Virgo:"EARTH", Capricorn:"EARTH",
+  Gemini:"AIR", Libra:"AIR", Aquarius:"AIR",
+  Cancer:"WATER", Scorpio:"WATER", Pisces:"WATER"
+};
+
+const archetypes = {
+  Sovereign: { AMBER:60, WOODY:40, RESINOUS:20, FRESH:0, FLORAL:0, EARTHY:0, MINERAL:0, AROMATIC:0, DARK_FRESH:0, MUSK:0 },
+  Anchor:    { WOODY:60, EARTHY:40, MUSK:20, FRESH:0, FLORAL:0, AMBER:0, MINERAL:0, RESINOUS:0, AROMATIC:0, DARK_FRESH:0 },
+  Visionary: { FRESH:60, MINERAL:40, FLORAL:20, AMBER:0, WOODY:0, EARTHY:0, RESINOUS:0, AROMATIC:0, DARK_FRESH:0, MUSK:0 },
+  Catalyst:  { AMBER:50, DARK_FRESH:50, RESINOUS:30, FRESH:0, FLORAL:0, WOODY:0, EARTHY:0, MINERAL:0, AROMATIC:0, MUSK:0 },
+  Alchemist: { RESINOUS:60, DARK_FRESH:40, MINERAL:20, FRESH:0, FLORAL:0, AMBER:0, WOODY:0, EARTHY:0, AROMATIC:0, MUSK:0 },
+  Nomad:     { AROMATIC:60, FRESH:40, WOODY:20, FRESH:0, FLORAL:0, AMBER:0, EARTHY:0, MINERAL:0, RESINOUS:0, DARK_FRESH:0, MUSK:0 }
+};
+
+const states = {
+  "UNSHAKEABLE STABILITY": { WOODY:50, EARTHY:50 },
+  "SHARP FOCUS": { MINERAL:60, FRESH:40 },
+  "QUIET AUTHORITY": { AMBER:60, RESINOUS:40 },
+  "RAW ENERGY": { DARK_FRESH:60, AROMATIC:40 },
+  "DEEP CALM": { MUSK:60, FLORAL:40 }
+};
+
+const environments = {
+  "DEEP FOREST FLOOR": { EARTHY:60, WOODY:40 },
+  "HIGH MOUNTAIN RIDGE": { MINERAL:60, FRESH:40 },
+  "OCEAN AT MIDNIGHT": { DARK_FRESH:60, RESINOUS:40 },
+  "SUN-HEATED STONE": { AMBER:60, MINERAL:40 }
+};
+
+// Minimal Soul Scents (fill remaining vectors later)
+const soulScents = {
+  MidnightStone: { FRESH:0, FLORAL:0, AMBER:40, WOODY:40, EARTHY:0, MINERAL:60, RESINOUS:0, AROMATIC:0, DARK_FRESH:0, MUSK:20 },
+  QuietEmber:    { FRESH:0, FLORAL:0, AMBER:60, WOODY:40, EARTHY:0, MINERAL:0, RESINOUS:30, AROMATIC:0, DARK_FRESH:0, MUSK:20 },
+  DarkMeridian:  { FRESH:0, FLORAL:0, AMBER:0, WOODY:30, EARTHY:0, MINERAL:0, RESINOUS:60, AROMATIC:0, DARK_FRESH:60, MUSK:0 }
+  // add remaining 9 scents with full 10D vectors
+};
