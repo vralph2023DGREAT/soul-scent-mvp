@@ -1,6 +1,58 @@
-soul-scent-mvp/
-├── index.html        // Ritual UX screens
-├── style.css         // Luxury editorial styling
-├── engine.js         // Canonical scoring + config objects
-├── config.js         // All archetypes, states, environments, soul scents
-└── README.md         // Documentation
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Soul Scent MVP</title>
+
+  <link rel="stylesheet" href="style.css">
+
+  <script src="config.js" defer></script>
+  <script src="engine.js" defer></script>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="brand">SOUL SCENT</div>
+      <h1 class="h1">Ritual Assessment</h1>
+    </div>
+
+    <div id="screen1" class="screen active card">
+      <p class="small">Welcome. Click Next to begin the assessment.</p>
+      <div class="controls">
+        <button id="nextBtn" class="btn primary">Next</button>
+      </div>
+    </div>
+
+    <div id="result" class="screen card" style="display:none;">
+      <h2 class="h1">Result</h2>
+      <pre id="output" class="small"></pre>
+    </div>
+  </div>
+
+  <script>
+    // Simple test hook to verify scripts are loaded
+    document.getElementById('nextBtn').addEventListener('click', () => {
+      // sample inputs to call engine functions
+      const element = { FRESH:50, DARK_FRESH:50 };
+      const archetype = { RESINOUS:60, DARK_FRESH:40, MINERAL:20 };
+      const state = { MINERAL:60, FRESH:40 };
+      const environment = { DARK_FRESH:60, RESINOUS:40 };
+
+      // compute and display results
+      const finalDNA = typeof computeFinalDNA === 'function'
+        ? computeFinalDNA(element, archetype, state, environment)
+        : { error: 'computeFinalDNA not found' };
+
+      const match = typeof matchSoulScent === 'function'
+        ? matchSoulScent(finalDNA)
+        : { error: 'matchSoulScent not found' };
+
+      document.getElementById('output').textContent = JSON.stringify({ finalDNA, match }, null, 2);
+
+      document.getElementById('screen1').style.display = 'none';
+      document.getElementById('result').style.display = 'block';
+    });
+  </script>
+</body>
+</html>
